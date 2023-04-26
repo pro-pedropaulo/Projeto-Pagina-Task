@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Tarefa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='task_details_styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="task-details">
+            <h2>Detalhes da Tarefa - {{ task.id }}</h2>
+            <h3>{{ task.title }}</h3>
+            <h4>Responsável: <span id="responsible">{{ task.responsible_name if task.responsible_name else 'Nenhum' }}</span></h4>
+            <button id="button-assume-task" class="button-assume-task" {% if user_name == task.responsible_name %}disabled style="opacity: 0.5"{% endif %}>Assumir Tarefa</button>            
+        </div>
+
+       <div class="task-description">
+    <textarea id="text_description" readonly>{{ task.description  | striptags  }}</textarea>
+    <div class="task-info">
+        <p><span class="bold">Prioridade:</span> {{ task.priority }}</p>
+        <p><span class="bold">Tipo:</span> {{ task.task_type }}</p>
+        <p><span class="bold">Criação:</span> {{ task.created_at }}</p>
+        <p><span class="bold">Situação:</span> {{ task.status }}</p>
+        <button type="submit" id="finish-task" {% if user_name != task.responsible_name or task.status != 'Aberta' %}disabled style="opacity: 0.5"{% endif %}>Finalizar Tarefa</button>
+    </div>
+</div>
+
+
+        <div class="observations-container">
+            <div class="new-observation">
+                <h4>Nova Observação</h4>
+                <textarea id="new-observation-textarea" disabled></textarea>
+            </div>
+        
+            <div class="observations">
+                <h4>Observações:</h4>
+                <div class="observation">
+                    <p>
+                        <strong>{{ task.creator_name }}</strong> em
+                        {{ task.created_at.strftime('%Y-%m-%d') }} às
+                        {{ task.created_at.strftime('%H:%M') }}
+                    </p>
+                    <p>{{ task.description | striptags }}</p>
+                </div>
+                {% for observation in observations %}
+                <div id="observations-list" class="observations">
+                    <p>
+                        {{ observation.created_at.strftime('%Y-%m-%d') }} às
+                        {{ observation.created_at.strftime('%H:%M') }} - 
+                        <strong>{{ observation.user_name }}</strong>
+                    </p>
+                    {% if observation.action %}
+                        <p><em>{{ observation.action }}</em></p>
+                    {% endif %}
+                    <p>{{ observation.text }}</p>
+                    {% if user_id == observation.user_id and loop.last and task.status != 'Concluída' %}
+                        <a href="#"></a>
+                    {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="button-row flex justify-content-between">
+            <form method="POST" action="{{ url_for('save_task_observation', task_id=task.id) }}">
+              {% if user_name == task.responsible_name and task.status != 'Concluída' %}
+                <input type="hidden" name="task_status" value="Aberta" id="task-status">
+                <button type="submit" id="btn-save" class="btn-disabled">Salvar</button>
+                <textarea id="new-observation-textarea" name="text" hidden></textarea>
+              {% endif %}
+            </form>
+            <button type="button" id="cancel">Voltar</button>
+          </div>
+    </div>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="{{ url_for('static', filename='task_details.js') }}"></script>
+</body>
+
+    <!-- Modal -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <h4>Assumir Tarefa</h4>
+            <p>Tem certeza de que deseja assumir a tarefa "<span id="task-title"></span>"?</p>
+            <p>A responsabilidade da tarefa será trocada de <strong>{{ task.responsible_name }}</strong> para <strong>{{ user_name }}</strong>.</p>
+            <div class="modal-actions">
+                <button id="confirm-btn" class="btn-confirm">Sim</button>
+                <button id="cancel-btn" class="btn-cancel">Não</button>
+            </div>
+        </div>
+    </div>
+
+</html>

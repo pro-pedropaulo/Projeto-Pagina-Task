@@ -1,0 +1,104 @@
+body {
+    font-family: 'Nunito', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+h2 {
+    text-align: left;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    flex: 1;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    flex: 3;
+    margin-left: 1rem;
+    padding: 0.5rem;
+}
+
+.form-group textarea {
+    resize: none;
+    height: 150px;
+}
+
+button {
+    background-color: #1c87c9;
+    color: #ffffff;
+    border: none;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    margin-right: 0.5rem;
+}
+
+button:hover {
+    background-color: #1a649d;
+}
+
+.input-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.input-group {
+    flex: 1;
+    margin-right: 1rem;
+    min-width: 30%;
+}
+
+.input-group:last-child {
+    margin-right: 0;
+}
+
+input[type="text"],
+select,
+textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.button-row {
+    display: flex;
+}
+
+button:disabled {
+    background-color: #1c87c9;
+}
+
+.input-group label {
+    font-size: 14px;
+}
+  
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  #description {
+    height: 300px;
+  }
+  
+  .button-row {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+  

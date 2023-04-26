@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inserir Tarefa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='create_task_styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2>Inserir Tarefa</h2>
+        <form id="task-form">
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="title">Título*</label>
+                    <input type="text" id="title" required>
+                </div>
+                <div class="input-group">
+                    <label for="type">Tipo*</label>
+                    <select id="type" required>
+                        <option value="" selected disabled>Selecione um tipo</option>
+                        <option value="Incidente">Incidente</option>
+                        <option value="Solicitação de Serviço">Solicitação de Serviço</option>
+                        <option value="Melhoria">Melhoria</option>
+                        <option value="Projetos">Projetos</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="priority">Prioridade*</label>
+                    <select id="priority" required>
+                        <option value="" selected disabled>Selecione uma prioridade</option>
+                        <option value="Alta">Alta</option>
+                        <option value="Média">Média</option>
+                        <option value="Baixa">Baixa</option>
+                        <option value="Sem Prioridade">Sem Prioridade</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="description">Descrição*</label>
+                    <div id="description"></div>
+                </div>
+            </div>
+            <div class="button-row">
+                <button type="submit">Salvar</button>
+                <button type="button" id="cancel">Cancelar</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="{{ url_for('static', filename='create_task.js') }}"></script>
+</body>
+</html>
